@@ -16,13 +16,8 @@ class WrxVisualizer(tk.Tk):
         def saveProjectName():
             print("button clicked")
 
-        def confirmCustomizer():
-            proceed = messagebox.askyesno('Yes|No', 'Do you want to proceed?')
-            if(proceed == True):
-                print("openign new window")
-            else:
-                self.quit
 
+        #displays the defualt car model
         def addDefaultImg():
             baseImg = Image.open("images/bluebase.png")
             resized = baseImg.resize((300,200), Image.ANTIALIAS)
@@ -32,6 +27,7 @@ class WrxVisualizer(tk.Tk):
             imgBlueBase.image = newBase
             imgBlueBase.place(x=0,y=60)
 
+        #handles the users choice of color selection
         def viewSelectedColor():
             choice = colorVar.get()
             if(choice == 1):
@@ -42,6 +38,7 @@ class WrxVisualizer(tk.Tk):
             else:
                 print("Select a color")
 
+        #handles the users choice of spoiler selection
         def addSpoiler():
             includeSpoiler = spoilerVar.get()
             if(includeSpoiler == 1):
@@ -51,11 +48,27 @@ class WrxVisualizer(tk.Tk):
                 print("you selected without spoiler")
             else:
                 print("Select option")
+    
+         #handles actions when a user clicks the confirm button
+        def confirmCustomizer(choice,includeSpoiler):
+            proceed = messagebox.askyesno('Confirmation Window', 'Do you want to proceed?')
+            if(proceed == True):
+                newWindow = tk.Tk()
+                newWindow.geometry("400x400")
+                choice = colorVar.get()
+                includeSpoiler = spoilerVar.get()
+                if(colorVar.get == 1 and spoilerVar.get() == 1):
+                    print("display blue with spoiler")
+                elif(choice == 1 and includeSpoiler == 2):
+                    print("Blue without spoiler")
 
-        # def confirmAllResults():
-        # def exitProgram():
-        # def showFinalResult():
+                exitBtn = tk.Button(newWindow, text="Exit program", command=self.quit)
+                exitBtn.place(x=150,y=300)
+                newWindow.mainloop()
+            else:
+                self.quit
 
+        
 
         promptLbl = tk.Label(self,text="To begin, choose a name for this project.")
         promptLbl.place(x=0,y=0)
@@ -91,9 +104,10 @@ class WrxVisualizer(tk.Tk):
         withoutSpoiler = tk.Radiobutton(self,text="Without Spoiler", variable=spoilerVar,value=2,command=addSpoiler)
         withoutSpoiler.place(x=0,y=350)
         
-
+        choice = colorVar.get()
+        includeSpoiler = spoilerVar.get()
         #confirmation button
-        confirmationBtn = tk.Button(self,text="Confirm Setup", command=confirmCustomizer)
+        confirmationBtn = tk.Button(self,text="Confirm Setup", command = lambda: confirmCustomizer(choice,includeSpoiler))
         confirmationBtn.place(x=0,y=400)
         #exit button to close out of program
         exitBtn = tk.Button(self, text="Exit program", command=self.quit)
