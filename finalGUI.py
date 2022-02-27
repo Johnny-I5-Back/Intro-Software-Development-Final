@@ -1,4 +1,3 @@
-from distutils import command
 import tkinter as tk
 from PIL import ImageTk,Image
 from tkinter import messagebox
