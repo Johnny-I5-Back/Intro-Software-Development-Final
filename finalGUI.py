@@ -1,6 +1,6 @@
 import tkinter as tk
-from PIL import ImageTk,Image
-from tkinter import messagebox
+# from PIL import ImageTk,Image
+from tkinter import PhotoImage, messagebox
 
 class WrxVisualizer(tk.Tk):
 
@@ -9,6 +9,7 @@ class WrxVisualizer(tk.Tk):
         self.title("Subaru Wrx Visualizer")
         self.geometry("400x600")
         self.iconbitmap('') #add ico icon
+        self.resizable(False,False)
         self.createWidgets()
 
     def createWidgets(self):
@@ -19,13 +20,10 @@ class WrxVisualizer(tk.Tk):
 
         #displays the defualt car model
         def addDefaultImg():
-            baseImg = Image.open("images/bluebase.png")
-            resized = baseImg.resize((300,200), Image.ANTIALIAS)
-            newBase = ImageTk.PhotoImage(resized)
-
-            imgBlueBase = tk.Label(self,image=newBase)
-            imgBlueBase.image = newBase
-            imgBlueBase.place(x=0,y=60)
+            img_label = tk.Label(self,width=300,height=200)
+            img_label.image = PhotoImage(file="images/bluebasenew.png")
+            img_label['image'] = img_label.image
+            img_label.place(x=0,y=60)
 
         #handles the users choice of color selection
         def viewSelectedColor():
@@ -50,14 +48,15 @@ class WrxVisualizer(tk.Tk):
                 print("Select option")
     
          #handles actions when a user clicks the confirm button
-        def confirmCustomizer(choice,includeSpoiler):
+        def confirmCustomizer(colorVar,spoilerVar):
+            choice = colorVar.get()
+            includeSpoiler = spoilerVar.get()
+
             proceed = messagebox.askyesno('Confirmation Window', 'Do you want to proceed?')
             if(proceed == True):
                 newWindow = tk.Tk()
                 newWindow.geometry("400x400")
-                choice = colorVar.get()
-                includeSpoiler = spoilerVar.get()
-                if(colorVar.get == 1 and spoilerVar.get() == 1):
+                if(choice == 1 and includeSpoiler == 1):
                     print("display blue with spoiler")
                 elif(choice == 1 and includeSpoiler == 2):
                     print("Blue without spoiler")
@@ -104,10 +103,9 @@ class WrxVisualizer(tk.Tk):
         withoutSpoiler = tk.Radiobutton(self,text="Without Spoiler", variable=spoilerVar,value=2,command=addSpoiler)
         withoutSpoiler.place(x=0,y=350)
         
-        choice = colorVar.get()
-        includeSpoiler = spoilerVar.get()
+        
         #confirmation button
-        confirmationBtn = tk.Button(self,text="Confirm Setup", command = lambda: confirmCustomizer(choice,includeSpoiler))
+        confirmationBtn = tk.Button(self,text="Confirm Setup", command = lambda: confirmCustomizer(colorVar,spoilerVar))
         confirmationBtn.place(x=0,y=400)
         #exit button to close out of program
         exitBtn = tk.Button(self, text="Exit program", command=self.quit)
