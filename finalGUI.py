@@ -38,7 +38,7 @@ class WrxVisualizer(tk.Tk):
                 print("you selected blue")
 
             elif(choice == 2):
-                print("you selected white")
+                print("you selected black")
             else:
                 print("Select a color")
 
@@ -84,9 +84,9 @@ class WrxVisualizer(tk.Tk):
                     imgBlueBase.image = newBase
                     imgBlueBase.place(x=0,y=60)
 
-                #displays white wrx with spoiler
+                #displays black wrx with spoiler
                 elif(color == 2 and spoiler == 1):
-                    baseImg = Image.open("images/whitespoiler.jpg")
+                    baseImg = Image.open("images/blackspoiler.png")
                     resized = baseImg.resize((300,200), Image.ANTIALIAS)
                     newBase = ImageTk.PhotoImage(resized)
     
@@ -94,9 +94,9 @@ class WrxVisualizer(tk.Tk):
                     imgBlueBase.image = newBase
                     imgBlueBase.place(x=0,y=60)
 
-                #displays white wrx without spoiler
+                #displays black wrx without spoiler
                 elif(color == 2 and spoiler == 2):
-                    baseImg = Image.open("images/whitebase.png")
+                    baseImg = Image.open("images/blackbase.png")
                     resized = baseImg.resize((300,200), Image.ANTIALIAS)
                     newBase = ImageTk.PhotoImage(resized)
     
@@ -131,8 +131,8 @@ class WrxVisualizer(tk.Tk):
         colorVar = tk.IntVar(self)
         blue = tk.Radiobutton(self,text="Blue", variable=colorVar,value=1,command=viewSelectedColor)
         blue.place(x=0,y=250)
-        white = tk.Radiobutton(self,text="White", variable=colorVar,value=2,command=viewSelectedColor)
-        white.place(x=0,y=275)
+        black = tk.Radiobutton(self,text="Black", variable=colorVar,value=2,command=viewSelectedColor)
+        black.place(x=0,y=275)
 
 
         #spoiler prompt
