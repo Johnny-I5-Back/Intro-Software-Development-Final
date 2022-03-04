@@ -1,6 +1,7 @@
 import tkinter as tk
-# from PIL import ImageTk,Image
+from PIL import Image,ImageTk
 from tkinter import PhotoImage, messagebox
+
 
 class WrxVisualizer(tk.Tk):
 
@@ -20,10 +21,15 @@ class WrxVisualizer(tk.Tk):
 
         #displays the defualt car model
         def addDefaultImg():
-            img_label = tk.Label(self,width=300,height=200)
-            img_label.image = PhotoImage(file="images/bluebasenew.png")
-            img_label['image'] = img_label.image
-            img_label.place(x=0,y=60)
+            baseImg = Image.open("images/bluebase.png")
+            resized = baseImg.resize((300,200), Image.ANTIALIAS)
+            newBase = ImageTk.PhotoImage(resized)
+
+            imgBlueBase = tk.Label(self,image=newBase)
+            imgBlueBase.image = newBase
+            imgBlueBase.place(x=0,y=60)
+
+    
 
         #handles the users choice of color selection
         def viewSelectedColor():
@@ -46,29 +52,66 @@ class WrxVisualizer(tk.Tk):
                 print("you selected without spoiler")
             else:
                 print("Select option")
-    
-         #handles actions when a user clicks the confirm button
-        def confirmCustomizer(colorVar,spoilerVar):
-            choice = colorVar.get()
-            includeSpoiler = spoilerVar.get()
 
+    
+        #when user clicks confirm a pop up appears, if yes open a new window by running createNewWindow
+        def confirmCustomizer(colorVar,spoilerVar):
+            color = colorVar.get()
+            spoiler = spoilerVar.get()
+            
             proceed = messagebox.askyesno('Confirmation Window', 'Do you want to proceed?')
             if(proceed == True):
-                newWindow = tk.Tk()
-                newWindow.geometry("400x400")
-                if(choice == 1 and includeSpoiler == 1):
-                    print("display blue with spoiler")
-                elif(choice == 1 and includeSpoiler == 2):
-                    print("Blue without spoiler")
+                finalWindow = tk.Toplevel()
+                finalWindow.geometry("400x400")
 
-                exitBtn = tk.Button(newWindow, text="Exit program", command=self.quit)
-                exitBtn.place(x=150,y=300)
-                newWindow.mainloop()
+                #displays blue wrx with spoiler
+                if(color == 1 and spoiler == 1):
+                    baseImg = Image.open("images/bluespoiler.png")
+                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
+                    newBase = ImageTk.PhotoImage(resized)
+
+                    imgBlueBase = tk.Label(finalWindow,image=newBase)
+                    imgBlueBase.image = newBase
+                    imgBlueBase.place(x=0,y=60)
+
+                #displays blue wrx without spoiler
+                elif(color == 1 and spoiler == 2):
+                    baseImg = Image.open("images/bluebase.png")
+                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
+                    newBase = ImageTk.PhotoImage(resized)
+    
+                    imgBlueBase = tk.Label(finalWindow,image=newBase)
+                    imgBlueBase.image = newBase
+                    imgBlueBase.place(x=0,y=60)
+
+                #displays white wrx with spoiler
+                elif(color == 2 and spoiler == 1):
+                    baseImg = Image.open("images/whitespoiler.jpg")
+                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
+                    newBase = ImageTk.PhotoImage(resized)
+    
+                    imgBlueBase = tk.Label(finalWindow,image=newBase)
+                    imgBlueBase.image = newBase
+                    imgBlueBase.place(x=0,y=60)
+
+                #displays white wrx without spoiler
+                elif(color == 2 and spoiler == 2):
+                    baseImg = Image.open("images/whitebase.png")
+                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
+                    newBase = ImageTk.PhotoImage(resized)
+    
+                    imgBlueBase = tk.Label(finalWindow,image=newBase)
+                    imgBlueBase.image = newBase
+                    imgBlueBase.place(x=0,y=60)
+
+                exitBtn = tk.Button(finalWindow, text="Exit program", command=self.quit)
+                exitBtn.place(x=100,y=400)
+
+                finalWindow.mainloop()
             else:
                 self.quit
 
-        
-
+    
         promptLbl = tk.Label(self,text="To begin, choose a name for this project.")
         promptLbl.place(x=0,y=0)
 
@@ -111,7 +154,6 @@ class WrxVisualizer(tk.Tk):
         exitBtn = tk.Button(self, text="Exit program", command=self.quit)
         exitBtn.place(x=100,y=400)
         
-
 
 def main():
     WrxVisualizer().mainloop()
