@@ -104,8 +104,18 @@ class WrxVisualizer(tk.Tk):
                     imgBlueBase.image = newBase
                     imgBlueBase.place(x=0,y=60)
 
+                else:
+                    baseImg = Image.open("images/bluebase.png")
+                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
+                    newBase = ImageTk.PhotoImage(resized)
+    
+                    imgBlueBase = tk.Label(finalWindow,image=newBase)
+                    imgBlueBase.image = newBase
+                    imgBlueBase.place(x=0,y=60)
+
+
                 exitBtn = tk.Button(finalWindow, text="Exit program", command=self.quit)
-                exitBtn.place(x=100,y=400)
+                exitBtn.place(x=0,y=250)
 
                 finalWindow.mainloop()
             else:
