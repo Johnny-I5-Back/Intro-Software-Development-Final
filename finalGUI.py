@@ -1,6 +1,5 @@
 import tkinter as tk
-from PIL import Image,ImageTk
-from tkinter import PhotoImage, messagebox
+from tkinter import END, PhotoImage, messagebox
 
 
 class WrxVisualizer(tk.Tk):
@@ -9,7 +8,6 @@ class WrxVisualizer(tk.Tk):
         super().__init__()
         self.title("Subaru Wrx Visualizer")
         self.geometry("400x600")
-        self.iconbitmap('') #add ico icon
         self.resizable(False,False)
         self.createWidgets()
 
@@ -21,37 +19,36 @@ class WrxVisualizer(tk.Tk):
 
         #displays the defualt car model
         def addDefaultImg():
-            baseImg = Image.open("images/bluebase.png")
-            resized = baseImg.resize((300,200), Image.ANTIALIAS)
-            newBase = ImageTk.PhotoImage(resized)
-
-            imgBlueBase = tk.Label(self,image=newBase)
-            imgBlueBase.image = newBase
-            imgBlueBase.place(x=0,y=60)
-
-    
+            img_label = tk.Label(self,width=300,height=200)
+            img_label.image = PhotoImage(file="images/bluebase.png")
+            img_label['image'] = img_label.image
+            img_label.place(x=0,y=60)
 
         #handles the users choice of color selection
         def viewSelectedColor():
             choice = colorVar.get()
-            if(choice == 1):
-                print("you selected blue")
+            displayInfo.delete('1.0',END)
 
+            if(choice == 1):
+                displayInfo.insert('1.0', 'You Selected Blue')
             elif(choice == 2):
-                print("you selected black")
+                displayInfo.insert('1.0', 'You Selected Black')
             else:
-                print("Select a color")
+                displayInfo.insert('1.0', 'Select A Color')
 
         #handles the users choice of spoiler selection
         def addSpoiler():
             includeSpoiler = spoilerVar.get()
+            displayInfo.delete('1.0',END)
+
             if(includeSpoiler == 1):
-                print("you selected spoiler")
+                displayInfo.insert('1.0', 'You Selected A Spoiler')
 
             elif(includeSpoiler == 2):
-                print("you selected without spoiler")
+                displayInfo.insert('1.0', 'You Selected No Spoiler')
+
             else:
-                print("Select option")
+                displayInfo.insert('1.0', 'Select An Option')
 
     
         #when user clicks confirm a pop up appears, if yes open a new window by running createNewWindow
@@ -63,58 +60,45 @@ class WrxVisualizer(tk.Tk):
             if(proceed == True):
                 finalWindow = tk.Toplevel()
                 finalWindow.geometry("400x400")
+                finalinfo = tk.Text(finalWindow)
+                finalinfo.place(x=0,y=20)
 
                 #displays blue wrx with spoiler
-                if(color == 1 and spoiler == 1):
-                    baseImg = Image.open("images/bluespoiler.png")
-                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
-                    newBase = ImageTk.PhotoImage(resized)
-
-                    imgBlueBase = tk.Label(finalWindow,image=newBase)
-                    imgBlueBase.image = newBase
-                    imgBlueBase.place(x=0,y=60)
+                if(color == 1 and spoiler == 1):                    
+                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label.image = PhotoImage(file="images/bluespoiler.png")
+                    img_label['image'] = img_label.image
+                    img_label.place(x=0,y=60)
 
                 #displays blue wrx without spoiler
                 elif(color == 1 and spoiler == 2):
-                    baseImg = Image.open("images/bluebase.png")
-                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
-                    newBase = ImageTk.PhotoImage(resized)
-    
-                    imgBlueBase = tk.Label(finalWindow,image=newBase)
-                    imgBlueBase.image = newBase
-                    imgBlueBase.place(x=0,y=60)
+                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label.image = PhotoImage(file="images/bluebase.png")
+                    img_label['image'] = img_label.image
+                    img_label.place(x=0,y=60)
 
                 #displays black wrx with spoiler
                 elif(color == 2 and spoiler == 1):
-                    baseImg = Image.open("images/blackspoiler.png")
-                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
-                    newBase = ImageTk.PhotoImage(resized)
-    
-                    imgBlueBase = tk.Label(finalWindow,image=newBase)
-                    imgBlueBase.image = newBase
-                    imgBlueBase.place(x=0,y=60)
+                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label.image = PhotoImage(file="images/blackspoiler.png")
+                    img_label['image'] = img_label.image
+                    img_label.place(x=0,y=60)
 
                 #displays black wrx without spoiler
-                elif(color == 2 and spoiler == 2):
-                    baseImg = Image.open("images/blackbase.png")
-                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
-                    newBase = ImageTk.PhotoImage(resized)
-    
-                    imgBlueBase = tk.Label(finalWindow,image=newBase)
-                    imgBlueBase.image = newBase
-                    imgBlueBase.place(x=0,y=60)
+                elif(color == 2 and spoiler == 2):                   
+                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label.image = PhotoImage(file="images/blackbase.png")
+                    img_label['image'] = img_label.image
+                    img_label.place(x=0,y=60)
 
                 else:
-                    baseImg = Image.open("images/bluebase.png")
-                    resized = baseImg.resize((300,200), Image.ANTIALIAS)
-                    newBase = ImageTk.PhotoImage(resized)
-    
-                    imgBlueBase = tk.Label(finalWindow,image=newBase)
-                    imgBlueBase.image = newBase
-                    imgBlueBase.place(x=0,y=60)
+                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label.image = PhotoImage(file="images/bluebase.png")
+                    img_label['image'] = img_label.image
+                    img_label.place(x=0,y=60)
 
 
-                exitBtn = tk.Button(finalWindow, text="Exit program", command=self.quit)
+                exitBtn = tk.Button(finalWindow, text="Exit program",bg="red", fg="white", padx=5,pady=5, command=self.quit)
                 exitBtn.place(x=0,y=250)
 
                 finalWindow.mainloop()
@@ -155,14 +139,19 @@ class WrxVisualizer(tk.Tk):
         
         withoutSpoiler = tk.Radiobutton(self,text="Without Spoiler", variable=spoilerVar,value=2,command=addSpoiler)
         withoutSpoiler.place(x=0,y=350)
+
+        #selection
+        displayInfo = tk.Text(self,height=2)
+        displayInfo.place(x=0,y=400)
         
         
         #confirmation button
-        confirmationBtn = tk.Button(self,text="Confirm Setup", command = lambda: confirmCustomizer(colorVar,spoilerVar))
-        confirmationBtn.place(x=0,y=400)
+        confirmationBtn = tk.Button(self,text="Confirm Setup", bg="green", fg="white", padx=5, pady=5, command = lambda: confirmCustomizer(colorVar,spoilerVar))
+        confirmationBtn.place(x=0,y=450)
+
         #exit button to close out of program
-        exitBtn = tk.Button(self, text="Exit program", command=self.quit)
-        exitBtn.place(x=100,y=400)
+        exitBtn = tk.Button(self, text="Exit program", bg="red",fg="white", padx=5,pady=5, command=self.quit)
+        exitBtn.place(x=100,y=450)
         
 
 def main():
