@@ -12,10 +12,7 @@ class WrxVisualizer(tk.Tk):
         self.createWidgets()
 
     def createWidgets(self):
-
-        def saveProjectName():
-            print("button clicked")
-
+        """creates the widgets for the gui"""
 
         #displays the defualt car model
         def addDefaultImg():
@@ -50,52 +47,68 @@ class WrxVisualizer(tk.Tk):
             else:
                 displayInfo.insert('1.0', 'Select An Option')
 
-    
-        #when user clicks confirm a pop up appears, if yes open a new window by running createNewWindow
+        def saveProjectName():
+            return projectName.get()
+
+        #when user clicks confirm a pop up appears, if yes a new window is created displaying the final project information
         def confirmCustomizer(colorVar,spoilerVar):
             color = colorVar.get()
             spoiler = spoilerVar.get()
             
+            #pop up that asks yes or no
             proceed = messagebox.askyesno('Confirmation Window', 'Do you want to proceed?')
+            #if pop up is yes/true create a new window
             if(proceed == True):
                 finalWindow = tk.Toplevel()
                 finalWindow.geometry("400x400")
+                finalWindow.resizable(False,False)
+
+                displayProjectName = tk.Text(finalWindow)
+                displayProjectName.insert('1.0', saveProjectName())
+                displayProjectName.place(x=0,y=0)
+
                 finalinfo = tk.Text(finalWindow)
                 finalinfo.place(x=0,y=20)
 
                 #displays blue wrx with spoiler
-                if(color == 1 and spoiler == 1):                    
+                if(color == 1 and spoiler == 1):
+                    finalinfo.insert('1.0', 'You selected blue with a spoiler.')                    
                     img_label = tk.Label(finalWindow,width=300,height=200)
                     img_label.image = PhotoImage(file="images/bluespoiler.png")
                     img_label['image'] = img_label.image
-                    img_label.place(x=0,y=60)
+                    img_label.place(x=0,y=40)
 
                 #displays blue wrx without spoiler
                 elif(color == 1 and spoiler == 2):
+                    finalinfo.insert('1.0', 'You selected blue without a spoiler.')                    
                     img_label = tk.Label(finalWindow,width=300,height=200)
                     img_label.image = PhotoImage(file="images/bluebase.png")
                     img_label['image'] = img_label.image
-                    img_label.place(x=0,y=60)
+                    img_label.place(x=0,y=40)
 
                 #displays black wrx with spoiler
                 elif(color == 2 and spoiler == 1):
+                    finalinfo.insert('1.0', 'You selected black with a spoiler.')                    
                     img_label = tk.Label(finalWindow,width=300,height=200)
                     img_label.image = PhotoImage(file="images/blackspoiler.png")
                     img_label['image'] = img_label.image
-                    img_label.place(x=0,y=60)
+                    img_label.place(x=0,y=40)
 
                 #displays black wrx without spoiler
-                elif(color == 2 and spoiler == 2):                   
+                elif(color == 2 and spoiler == 2):  
+                    finalinfo.insert('1.0', 'You selected black without a spoiler.')                                     
                     img_label = tk.Label(finalWindow,width=300,height=200)
                     img_label.image = PhotoImage(file="images/blackbase.png")
                     img_label['image'] = img_label.image
-                    img_label.place(x=0,y=60)
-
+                    img_label.place(x=0,y=40)
+                
+                #if a user does not submit any options it returns the base model of the car
                 else:
+                    finalinfo.insert('1.0', 'You selected no options, showing base model.')                    
                     img_label = tk.Label(finalWindow,width=300,height=200)
                     img_label.image = PhotoImage(file="images/bluebase.png")
                     img_label['image'] = img_label.image
-                    img_label.place(x=0,y=60)
+                    img_label.place(x=0,y=40)
 
 
                 exitBtn = tk.Button(finalWindow, text="Exit program",bg="red", fg="white", padx=5,pady=5, command=self.quit)
@@ -105,14 +118,16 @@ class WrxVisualizer(tk.Tk):
             else:
                 self.quit
 
+        
+
     
-        promptLbl = tk.Label(self,text="To begin, choose a name for this project.")
+        promptLbl = tk.Label(self,text="Choose a name for the project.")
         promptLbl.place(x=0,y=0)
 
         projectName = tk.Entry(self)
         projectName.place(x=0,y=20)
 
-        saveProjectBtn = tk.Button(self, text="Save",command=saveProjectName)
+        saveProjectBtn = tk.Button(self, text="Continue",command=saveProjectName)
         saveProjectBtn.place(x=0,y=40)
 
         #add the default image
