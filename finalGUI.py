@@ -9,6 +9,7 @@ class WrxVisualizer(tk.Tk):
         super().__init__()
         self.title("Subaru Wrx Visualizer") #window title
         self.geometry("400x600") #window size
+        self.configure(bg="#111111")
         self.resizable(False,False) #makes it where you cant change window dimensions
         self.createWidgets() # calls the create widgets function
 
@@ -18,7 +19,7 @@ class WrxVisualizer(tk.Tk):
         #displays the defualt car model
         def addDefaultImg():
             """Adds a label for the image and adds in the default model for the program"""
-            img_label = tk.Label(self,width=300,height=200)
+            img_label = tk.Label(self,width=300,height=200,bg="#111111")
             img_label.image = PhotoImage(file="images/bluebase.png")
             img_label['image'] = img_label.image
             img_label.place(x=0,y=60)
@@ -67,13 +68,14 @@ class WrxVisualizer(tk.Tk):
             if(proceed == True):
                 finalWindow = tk.Toplevel() #creates new tkinter window 
                 finalWindow.geometry("400x400") #new window size
+                finalWindow.configure(bg="#111111")
                 finalWindow.resizable(False,False) #not resizeable
 
                 displayProjectName = tk.Text(finalWindow)
                 displayProjectName.insert('1.0', saveProjectName())
                 displayProjectName.place(x=0,y=0)
 
-                finalinfo = tk.Text(finalWindow)
+                finalinfo = tk.Text(finalWindow,bg="#111111",fg="white")
                 finalinfo.place(x=0,y=20)
 
                 #if color is equal to 1 returns blue if 2 returns black
@@ -81,7 +83,7 @@ class WrxVisualizer(tk.Tk):
                 #displays blue wrx with spoiler
                 if(color == 1 and spoiler == 1):
                     finalinfo.insert('1.0', 'You selected blue with a spoiler.')                    
-                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label = tk.Label(finalWindow,bg="#111111",width=300,height=200)
                     img_label.image = PhotoImage(file="images/bluespoiler.png")
                     img_label['image'] = img_label.image
                     img_label.place(x=0,y=40)
@@ -89,7 +91,7 @@ class WrxVisualizer(tk.Tk):
                 #displays blue wrx without spoiler
                 elif(color == 1 and spoiler == 2):
                     finalinfo.insert('1.0', 'You selected blue without a spoiler.')                    
-                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label = tk.Label(finalWindow,bg="#111111",width=300,height=200)
                     img_label.image = PhotoImage(file="images/bluebase.png")
                     img_label['image'] = img_label.image
                     img_label.place(x=0,y=40)
@@ -97,7 +99,7 @@ class WrxVisualizer(tk.Tk):
                 #displays black wrx with spoiler
                 elif(color == 2 and spoiler == 1):
                     finalinfo.insert('1.0', 'You selected black with a spoiler.')                    
-                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label = tk.Label(finalWindow,bg="#111111",width=300,height=200)
                     img_label.image = PhotoImage(file="images/blackspoiler.png")
                     img_label['image'] = img_label.image
                     img_label.place(x=0,y=40)
@@ -105,7 +107,7 @@ class WrxVisualizer(tk.Tk):
                 #displays black wrx without spoiler
                 elif(color == 2 and spoiler == 2):  
                     finalinfo.insert('1.0', 'You selected black without a spoiler.')                                     
-                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label = tk.Label(finalWindow,bg="#111111",width=300,height=200)
                     img_label.image = PhotoImage(file="images/blackbase.png")
                     img_label['image'] = img_label.image
                     img_label.place(x=0,y=40)
@@ -113,7 +115,7 @@ class WrxVisualizer(tk.Tk):
                 #if a user does not submit any options it returns the base model of the car
                 else:
                     finalinfo.insert('1.0', 'You selected no options, showing base model.')                    
-                    img_label = tk.Label(finalWindow,width=300,height=200)
+                    img_label = tk.Label(finalWindow,bg="#111111",width=300,height=200)
                     img_label.image = PhotoImage(file="images/bluebase.png")
                     img_label['image'] = img_label.image
                     img_label.place(x=0,y=40)
@@ -121,6 +123,9 @@ class WrxVisualizer(tk.Tk):
                 #creates and styles exit button
                 exitBtn = tk.Button(finalWindow, text="Exit program",bg="red", fg="white", padx=5,pady=5, command=self.quit)
                 exitBtn.place(x=0,y=250)
+
+                returnBackBtn = tk.Button(finalWindow, text="Go Back", bg="green", fg="white",padx=5,pady=5,command=lambda: finalWindow.destroy())
+                returnBackBtn.place(x=100,y=250)
 
                 finalWindow.mainloop()
 
@@ -131,45 +136,45 @@ class WrxVisualizer(tk.Tk):
         
 
         #ask user to enter name of project
-        promptLbl = tk.Label(self,text="Choose a name for the project.")
+        promptLbl = tk.Label(self,bg="#111111",fg="white",text="Choose a name for the project press button to 'save'.")
         promptLbl.place(x=0,y=0)
 
         #input field for project name
-        projectName = tk.Entry(self)
+        projectName = tk.Entry(self,bg="#222222",fg="white")
         projectName.place(x=0,y=20)
         
         #save project name button calls the function that stores the name
-        saveProjectBtn = tk.Button(self, text="Continue",command=saveProjectName)
+        saveProjectBtn = tk.Button(self,bg="green", fg="white", text="Click to Save Name",command=saveProjectName)
         saveProjectBtn.place(x=0,y=40)
 
         #add the default image called above
         addDefaultImg()
 
         #color prompt
-        colorlbl = tk.Label(self, text="Choose the base color: ")
+        colorlbl = tk.Label(self,bg="#111111",fg="white", text="Choose the base color: ")
         colorlbl.place(x=0,y=225)
 
         #creates a radio button for the color choices
         colorVar = tk.IntVar(self)
-        blue = tk.Radiobutton(self,text="Blue", variable=colorVar,value=1,command=viewSelectedColor)
+        blue = tk.Radiobutton(self,text="Blue", variable=colorVar,value=1,bg="white",command=viewSelectedColor)
         blue.place(x=0,y=250)
-        black = tk.Radiobutton(self,text="Black", variable=colorVar,value=2,command=viewSelectedColor)
+        black = tk.Radiobutton(self,text="Black", variable=colorVar,value=2,bg="white",command=viewSelectedColor)
         black.place(x=0,y=275)
 
 
         #spoiler prompt
-        spoilerSelectLbl = tk.Label(self,text="Add Spoiler: ")
+        spoilerSelectLbl = tk.Label(self,bg="#111111",fg="white",text="Add Spoiler: ")
         spoilerSelectLbl.place(x=0,y=300)
 
         #creates the radio buttons for the spoiler choice
         spoilerVar = tk.IntVar(self)
-        withSpoiler = tk.Radiobutton(self,text="With Spoiler", variable=spoilerVar,value=1,command=addSpoiler)
+        withSpoiler = tk.Radiobutton(self,text="With Spoiler", variable=spoilerVar,value=1,bg="white",command=addSpoiler)
         withSpoiler.place(x=0,y=325)
-        withoutSpoiler = tk.Radiobutton(self,text="Without Spoiler", variable=spoilerVar,value=2,command=addSpoiler)
+        withoutSpoiler = tk.Radiobutton(self,text="Without Spoiler", variable=spoilerVar,value=2,bg="white",command=addSpoiler)
         withoutSpoiler.place(x=0,y=350)
 
         #displays the information when a user selects an option from the radio buttons
-        displayInfo = tk.Text(self,height=2)
+        displayInfo = tk.Text(self,height=2,bg="#222222",fg="white")
         displayInfo.place(x=0,y=400)
         
         
