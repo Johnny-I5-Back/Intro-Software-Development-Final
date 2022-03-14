@@ -59,8 +59,8 @@ class WrxVisualizer(tk.Tk):
         #when user clicks confirm a pop up appears, if yes a new window is created displaying the final project information
         def confirmCustomizer(colorVar,spoilerVar):
             """takes the user selection from the radio buttons and returns the final image based off of the results"""
-            color = colorVar.get()
-            spoiler = spoilerVar.get()
+            color = colorVar.get() #sets the integer value of radio button to color
+            spoiler = spoilerVar.get() #sets the integer value of spoiler radio button to spoiler
             
             #pop up that asks yes or no
             proceed = messagebox.askyesno('Confirmation Window', 'Do you want to proceed?')
@@ -81,7 +81,8 @@ class WrxVisualizer(tk.Tk):
                 #if color is equal to 1 returns blue if 2 returns black
                 #if spoiler is equal to 1 returns with spoiler if 2 returns without spoiler
                 #displays blue wrx with spoiler image and text
-                if(color == 1 and spoiler == 1):
+                
+                if((color == 1 and spoiler == 1) or color == 0 and spoiler == 1):
                     finalinfo.insert('1.0', 'You selected blue with a spoiler.')                    
                     img_label = tk.Label(finalWindow,bg="#111111",width=300,height=200)
                     img_label.image = PhotoImage(file="images/bluespoiler.png")
@@ -89,7 +90,7 @@ class WrxVisualizer(tk.Tk):
                     img_label.place(x=0,y=40)
 
                 #displays blue wrx without spoiler image and text
-                elif(color == 1 and spoiler == 2):
+                elif((color == 1 and spoiler == 2) or color == 0 and spoiler == 2):
                     finalinfo.insert('1.0', 'You selected blue without a spoiler.')                    
                     img_label = tk.Label(finalWindow,bg="#111111",width=300,height=200)
                     img_label.image = PhotoImage(file="images/bluebase.png")
@@ -105,7 +106,7 @@ class WrxVisualizer(tk.Tk):
                     img_label.place(x=0,y=40)
 
                 #displays black wrx without spoiler image and text
-                elif(color == 2 and spoiler == 2):  
+                elif((color == 2 and spoiler == 2) or color == 2 and spoiler == 0):  
                     finalinfo.insert('1.0', 'You selected black without a spoiler.')                                     
                     img_label = tk.Label(finalWindow,bg="#111111",width=300,height=200)
                     img_label.image = PhotoImage(file="images/blackbase.png")
